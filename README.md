@@ -66,7 +66,9 @@ guarda si la receta es de un concursante.
 ## Diagramas de secuencia
 
 ###  **Registrar recetas**
-En base al tipo de actor que registre la receta se crea un tipo de receta.
+Con base en la estrategia
+específica de cada actor se construye una Entidad (RecetaTelevidente, RecetaConcursante, RecetaJurado), se guarda vía 
+repositorio en la base de datos y se devuelve la información.
 
 * **Receta Televidente**
 
@@ -85,14 +87,17 @@ En base al tipo de actor que registre la receta se crea un tipo de receta.
 Se tienen varios métodos de consulta de recetas:
 
 * **obtener todas las recetas**
-
+Se hace uso de una función findAll() en la colección de recetas y se devuelve la lista de estas.
 ![img.png](docs/UML/obtenerTodasRecetas.png)
 
 * **Obtener receta por su ID**
 
+Se hace la búsqueda del id dentro de la colección de recetas, en caso de encontrarla se devuelve la información
+de esta receta.
 ![img_1.png](docs/UML/obtenerRecetaPorID.png)
 
 * Obtener receta por tipo (concursante, televidente, jurado) 
+Se hace un filtro por el tipo de Receta en la base de datos.
 
 ![img_2.png](docs/UML/obtenerRecetaconcursante.png)
 
@@ -102,18 +107,22 @@ Se tienen varios métodos de consulta de recetas:
 
 
 * **Obtener Receta por Temporada**
+Al darse una temporada, se buscan todos los registros guardados que coincidan en el campo de la temporada y son devueltos.
 ![img_2.png](docs/UML/obtenerRecetaTemporada.png)
 
 * **Obtener Receta por ingrediente**
+Se realiza una consulta sobre la lista de ingredientes de cada una de las recetas presentes en la base de datos.
 ![img.png](docs/UML/obtenerRecetaIngrediente.png)
 
 
-### Eliminar una receta
+### Eliminar una receta !!!
 * **Eliminar receta por ID**
+Se elimina una receta con su identificador (id) en caso de existir.
 ![img.png](docs/UML/eliminarReceta.png)
 
 
 ### Actualizar una receta
+Si la receta existe, se hace la actualización de los campos especificados por el actor.
 ![img_1.png](docs/UML/actualizarReceta.png)
 
 ## Instrucciones de instalación y ejecución
