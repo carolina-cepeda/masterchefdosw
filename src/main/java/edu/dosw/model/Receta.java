@@ -42,5 +42,10 @@ public class Receta {
     public void setNombreChef(String nombreChef) { this.nombreChef = nombreChef; }
 
     public String getTipoAutor() { return tipoAutor; }
-    public void setTipoAutor(String tipoAutor) { this.tipoAutor = tipoAutor; }
+
+    public void setTipo(String tipo) { this.tipoAutor = tipo; }
+
+    public String getTipo() {return this.tipoAutor;
+    }
 }
+
