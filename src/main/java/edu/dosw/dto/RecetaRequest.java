@@ -4,6 +4,7 @@ import edu.dosw.model.Ingrediente;
 import java.util.List;
 
 public class RecetaRequest {
+    private String id;
     private String titulo;
     private List<Ingrediente> listaIngredientes;
     private String pasosPreparacion;
@@ -11,6 +12,9 @@ public class RecetaRequest {
     private String tipoAutor;
     private Integer temporada;
 
+    public String getId() {
+        return id;
+    }
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
@@ -31,5 +35,9 @@ public class RecetaRequest {
 
     public void setAutor(String name) {
         this.nombreChef = name ;
+    }
+
+    public void setId(String number) {
+        this.id = number;
     }
 }

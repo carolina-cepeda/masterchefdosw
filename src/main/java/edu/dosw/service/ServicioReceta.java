@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service("mongoService")
 public class ServicioReceta {
     @Autowired
@@ -34,8 +36,9 @@ public class ServicioReceta {
     }
 
     public Receta obtenerPorConsecutivo(String id) {
-        return recetaRepository.findById(id);
+        return recetaRepository.findById(id).orElseThrow(() -> new RuntimeException("Receta no encontrada"));
     }
+
 
     public List<Receta> obtenerPorTipo(String tipo) {
         return recetaRepository.findByTipo(tipo);
@@ -54,16 +57,15 @@ public class ServicioReceta {
     }
 
     public Receta actualizar(RecetaRequest req) {
-        Receta existente = recetaRepository.findById(req.getTitulo());
+        Receta existente = recetaRepository.findById(req.getId())
+                .orElseThrow(() -> new RuntimeException("Receta no encontrada"));
 
-        if (req.getPasosPreparacion() != null)
-            existente.setPasosPreparacion(req.getPasosPreparacion());
-        if (req.getListaIngredientes() != null)
-            existente.setListaIngredientes(req.getListaIngredientes());
-        if (req.getNombreChef() != null)
-            existente.setNombreChef(req.getNombreChef());
+        existente.setTitulo(req.getTitulo());
+        existente.setListaIngredientes(req.getListaIngredientes());
+        existente.setPasosPreparacion(req.getPasosPreparacion());
 
-        recetaRepository.guardar(existente);
-        return existente;
+        return recetaRepository.save(existente);
     }
+
+
 }

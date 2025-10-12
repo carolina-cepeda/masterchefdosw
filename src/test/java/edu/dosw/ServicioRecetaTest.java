@@ -1,6 +1,7 @@
 package edu.dosw;
 
 import edu.dosw.dto.RecetaRequest;
+import edu.dosw.model.Ingrediente;
 import edu.dosw.model.Receta;
 import edu.dosw.repository.RepositorioReceta;
 import edu.dosw.service.ServicioReceta;
@@ -62,7 +63,11 @@ class ServicioRecetaTest {
 
     @Test
     void obtenerPorConsecutivo_debeRetornarReceta() {
-        when(recetaRepository.findById("1")).thenReturn(receta);
+        Receta receta = new Receta();
+        receta.setId("1");
+        receta.setTipo("televidente");
+
+        when(recetaRepository.findById("1")).thenReturn(Optional.of(receta));
 
         Receta resultado = servicioReceta.obtenerPorConsecutivo("1");
 
@@ -70,6 +75,8 @@ class ServicioRecetaTest {
         assertEquals("televidente", resultado.getTipo());
         verify(recetaRepository).findById("1");
     }
+
+
 
     @Test
     void buscarPorIngrediente_debeRetornarListaDeRecetas() {
@@ -94,25 +101,36 @@ class ServicioRecetaTest {
 
     @Test
     void actualizar_debeActualizarCamposYGuardarReceta() {
-
+        // Arrange
         Receta existente = new Receta();
-        existente.setTitulo("Ajiaco");
-        existente.setPasosPreparacion("Original");
-        existente.setNombreChef("Chef A");
+        existente.setId("1");
+        existente.setTitulo("Antigua");
+        existente.setListaIngredientes(List.of(
+                new Ingrediente("Huevos", "Frescos"),
+                new Ingrediente("Leche", "Entera")
+        ));
+        existente.setPasosPreparacion("Batir todo");
 
-        req.setTitulo("Ajiaco");
-        req.setPasosPreparacion("Nuevo paso");
-        req.setNombreChef("Chef B");
+        RecetaRequest req = new RecetaRequest();
+        req.setId("1");
+        req.setTitulo("Nueva receta");
+        req.setListaIngredientes(List.of(
+                new Ingrediente("Harina", "De trigo"),
+                new Ingrediente("Azúcar", "Refinada")
+        ));
+        req.setPasosPreparacion("Mezclar bien");
 
-        when(recetaRepository.findById("Ajiaco")).thenReturn(existente);
+        when(recetaRepository.findById("1")).thenReturn(Optional.of(existente));
+        when(recetaRepository.save(any(Receta.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Receta resultado = servicioReceta.actualizar(req);
 
         assertNotNull(resultado);
-        assertEquals("Nuevo paso", resultado.getPasosPreparacion());
-        assertEquals("Chef B", resultado.getNombreChef());
-        verify(recetaRepository, times(1)).findById("Ajiaco");
-        verify(recetaRepository, times(1)).guardar(existente);
+        assertEquals("Nueva receta", resultado.getTitulo());
+        assertEquals(2, resultado.getListaIngredientes().size());
+        assertEquals("Harina", resultado.getListaIngredientes().get(0).getNombre());
+        verify(recetaRepository).findById("1");
+        verify(recetaRepository).save(any(Receta.class));
     }
 
 
@@ -137,6 +155,18 @@ class ServicioRecetaTest {
         assertFalse(resultado.isEmpty());
         assertEquals("Ajiaco", resultado.get(0).getTitulo());
         verify(recetaRepository).findByTemporada(1);
+    }
+
+    @Test
+    void actualizarDebeLanzarExcepcionCuandoNoExisteReceta() {
+        RecetaRequest req = new RecetaRequest();
+        req.setTitulo("Torta de chocolate");
+        when(recetaRepository.findById("99")).thenReturn(Optional.empty());
+
+        Exception ex = assertThrows(RuntimeException.class, () -> servicioReceta.actualizar(req));
+        assertEquals("Receta no encontrada", ex.getMessage());
+
+        verify(recetaRepository, never()).guardar(any());
     }
 
 
