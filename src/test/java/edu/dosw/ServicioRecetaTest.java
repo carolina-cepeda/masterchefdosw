@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -61,7 +62,6 @@ class ServicioRecetaTest {
 
     @Test
     void obtenerPorConsecutivo_debeRetornarReceta() {
-        // ⚠️ el servicio usa recetaRepository.findById(String)
         when(recetaRepository.findById("1")).thenReturn(receta);
 
         Receta resultado = servicioReceta.obtenerPorConsecutivo("1");
@@ -90,4 +90,54 @@ class ServicioRecetaTest {
 
         verify(recetaRepository, times(1)).eliminar("1");
     }
+
+
+    @Test
+    void actualizar_debeActualizarCamposYGuardarReceta() {
+
+        Receta existente = new Receta();
+        existente.setTitulo("Ajiaco");
+        existente.setPasosPreparacion("Original");
+        existente.setNombreChef("Chef A");
+
+        req.setTitulo("Ajiaco");
+        req.setPasosPreparacion("Nuevo paso");
+        req.setNombreChef("Chef B");
+
+        when(recetaRepository.findById("Ajiaco")).thenReturn(existente);
+
+        Receta resultado = servicioReceta.actualizar(req);
+
+        assertNotNull(resultado);
+        assertEquals("Nuevo paso", resultado.getPasosPreparacion());
+        assertEquals("Chef B", resultado.getNombreChef());
+        verify(recetaRepository, times(1)).findById("Ajiaco");
+        verify(recetaRepository, times(1)).guardar(existente);
+    }
+
+
+
+    @Test
+    void obtenerPorTipo_debeRetornarRecetasDelTipo() {
+        when(recetaRepository.findByTipo("televidente")).thenReturn(List.of(receta));
+
+        List<Receta> resultado = servicioReceta.obtenerPorTipo("televidente");
+
+        assertFalse(resultado.isEmpty());
+        assertEquals("Ajiaco", resultado.get(0).getTitulo());
+        verify(recetaRepository).findByTipo("televidente");
+    }
+
+    @Test
+    void obtenerPorTemporada_debeRetornarRecetasDeEsaTemporada() {
+        when(recetaRepository.findByTemporada(1)).thenReturn(List.of(receta));
+
+        List<Receta> resultado = servicioReceta.obtenerPorTemporada(1);
+
+        assertFalse(resultado.isEmpty());
+        assertEquals("Ajiaco", resultado.get(0).getTitulo());
+        verify(recetaRepository).findByTemporada(1);
+    }
+
+
 }

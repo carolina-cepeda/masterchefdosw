@@ -9,7 +9,7 @@ public interface RepositorioReceta {
     void guardar(Receta receta);
     Receta findById(String id);
     List<Receta> findAll();
-    List<Receta> findByTipoAutor(String tipoAutor);
+    List<Receta> findByTipo(String tipoAutor);
     List<Receta> findByIngrediente(String ingrediente);
     List <Receta> findByTemporada(int temporada);
     void eliminar(String titulo);

@@ -38,7 +38,7 @@ public class ServicioReceta {
     }
 
     public List<Receta> obtenerPorTipo(String tipo) {
-        return recetaRepository.findByTipoAutor(tipo);
+        return recetaRepository.findByTipo(tipo);
     }
 
     public List<Receta> obtenerPorTemporada(int temp) {

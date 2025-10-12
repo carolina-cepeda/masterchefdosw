@@ -28,4 +28,8 @@ public class RecetaRequest {
 
     public Integer getTemporada() { return temporada; }
     public void setTemporada(Integer temporada) { this.temporada = temporada; }
+
+    public void setAutor(String name) {
+        this.nombreChef = name ;
+    }
 }
