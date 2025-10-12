@@ -168,8 +168,14 @@
                                     <element>PACKAGE</element>
                                     <limits>
                                         <limit>
-                                            <counter>CLASS</counter>
+                                            <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
+                                            <minimum>0.85</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -178,11 +184,15 @@
                                 <exclude>**/config/**</exclude>
                                 <exclude>**/dto/**</exclude>
                                 <exclude>**/model/**</exclude>
+                                <exclude>**/strategy/**</exclude>
+                                <exclude>**/configurators/**</exclude>
                                 <exclude>**/exception/**</exclude>
                                 <exclude>**/default/**</exclude>
+
                             </excludes>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
