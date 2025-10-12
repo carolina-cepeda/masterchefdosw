@@ -182,7 +182,6 @@
                             <excludes>
                                 <exclude>**/config/**</exclude>
                                 <exclude>**/dto/**</exclude>
-                                <exclude>**/model/**</exclude>
                                 <exclude>**/exception/**</exclude>
                                 <exclude>**/default/**</exclude>
                             </excludes>
