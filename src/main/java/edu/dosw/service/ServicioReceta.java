@@ -5,6 +5,8 @@ import edu.dosw.model.Receta;
 import edu.dosw.model.RecetaConcursante;
 import edu.dosw.repository.RepositorioReceta;
 import edu.dosw.service.strategy.EstrategiaRegistroReceta;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service("mongoService")
@@ -32,15 +34,14 @@ public class ServicioReceta {
     }
 
     public Receta obtenerPorConsecutivo(String id) {
-        return recetaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Receta no encontrada con ID: " + id));
+        return recetaRepository.findById(id);
     }
 
     public List<Receta> obtenerPorTipo(String tipo) {
         return recetaRepository.findByTipoAutor(tipo);
     }
 
-    public List<RecetaConcursante> obtenerPorTemporada(int temp) {
+    public List<Receta> obtenerPorTemporada(int temp) {
         return recetaRepository.findByTemporada(temp);
     }
 
@@ -53,8 +54,7 @@ public class ServicioReceta {
     }
 
     public Receta actualizar(RecetaRequest req) {
-        Receta existente = recetaRepository.findById(req.getTitulo())
-                .orElseThrow(() -> new IllegalArgumentException("Receta no encontrada"));
+        Receta existente = recetaRepository.findById(req.getTitulo());
 
         if (req.getPasosPreparacion() != null)
             existente.setPasosPreparacion(req.getPasosPreparacion());

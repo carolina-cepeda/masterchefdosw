@@ -1,10 +1,14 @@
 package edu.dosw.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "recetas")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Receta {
     private String id;

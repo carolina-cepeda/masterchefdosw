@@ -4,7 +4,9 @@ import edu.dosw.dto.RecetaRequest;
 import edu.dosw.model.Receta;
 import edu.dosw.model.RecetaConcursante;
 import edu.dosw.service.ServicioReceta;
-import edu.dosw.service.strategy.*;
+import edu.dosw.service.strategy.EstrategiaRegistroChef;
+import edu.dosw.service.strategy.EstrategiaRegistroConcursante;
+import edu.dosw.service.strategy.EstrategiaRegistroTelevidente;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +61,7 @@ public class ControladorReceta {
     }
 
     @GetMapping("/temporada/{temp}")
-    public ResponseEntity<List<RecetaConcursante>> getPorTemporada(@PathVariable int temp) {
+    public ResponseEntity<List<Receta>> getPorTemporada(@PathVariable int temp) {
         return ResponseEntity.ok(servicio.obtenerPorTemporada(temp));
     }
 
