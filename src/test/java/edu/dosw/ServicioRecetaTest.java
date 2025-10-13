@@ -48,7 +48,7 @@ class ServicioRecetaTest {
         assertNotNull(resultado);
         assertEquals("Ajiaco", resultado.getTitulo());
         verify(estrategia, times(1)).registrarReceta(req);
-        verify(recetaRepository, times(1)).guardar(receta);
+        verify(recetaRepository, times(1)).save(receta);
     }
 
     @Test
@@ -80,22 +80,22 @@ class ServicioRecetaTest {
 
     @Test
     void buscarPorIngrediente_debeRetornarListaDeRecetas() {
-        when(recetaRepository.findByIngrediente("papa")).thenReturn(List.of(receta));
+        when(recetaRepository.findByIngredientesContaining("papa")).thenReturn(List.of(receta));
 
         List<Receta> resultado = servicioReceta.buscarPorIngrediente("papa");
 
         assertFalse(resultado.isEmpty());
         assertEquals("Ajiaco", resultado.get(0).getTitulo());
-        verify(recetaRepository).findByIngrediente("papa");
+        verify(recetaRepository).findByIngredientesContaining("papa");
     }
 
     @Test
     void eliminar_debeInvocarRepositorio() {
-        doNothing().when(recetaRepository).eliminar("1");
+        doNothing().when(recetaRepository).deleteByTitulo("Ajiaco");
 
-        servicioReceta.eliminar("1");
+        servicioReceta.eliminar("Ajiaco");
 
-        verify(recetaRepository, times(1)).eliminar("1");
+        verify(recetaRepository, times(1)).deleteByTitulo("Ajiaco");
     }
 
 
@@ -166,7 +166,7 @@ class ServicioRecetaTest {
         Exception ex = assertThrows(RuntimeException.class, () -> servicioReceta.actualizar(req));
         assertEquals("Receta no encontrada", ex.getMessage());
 
-        verify(recetaRepository, never()).guardar(any());
+        verify(recetaRepository, never()).save(any());
     }
 
 
