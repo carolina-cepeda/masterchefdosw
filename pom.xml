@@ -188,7 +188,8 @@
                                 <exclude>**/configurators/**</exclude>
                                 <exclude>**/exception/**</exclude>
                                 <exclude>**/default/**</exclude>
-
+                                <exclude>**/MasterChefDoswApplication.class</exclude>
+                                <exclude>**/MasterChefDoswApplication</exclude>
                             </excludes>
                         </configuration>
                     </execution>

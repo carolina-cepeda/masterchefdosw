@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MasterChefDosw {
+public class MasterChefDoswApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MasterChefDosw.class, args);
+        SpringApplication.run(MasterChefDoswApplication.class, args);
     }
 }

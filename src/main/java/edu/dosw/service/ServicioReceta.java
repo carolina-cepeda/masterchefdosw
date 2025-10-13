@@ -27,7 +27,7 @@ public class ServicioReceta {
 
     public Receta registrarReceta(RecetaRequest req) {
         Receta receta = estrategia.registrarReceta(req);
-        recetaRepository.guardar(receta);
+        recetaRepository.save(receta);
         return receta;
     }
 
@@ -49,11 +49,11 @@ public class ServicioReceta {
     }
 
     public List<Receta> buscarPorIngrediente(String nombre) {
-        return recetaRepository.findByIngrediente(nombre);
+        return recetaRepository.findByIngredientesContaining(nombre);
     }
 
-    public void eliminar(String id) {
-        recetaRepository.eliminar(id);
+    public void eliminar(String titulo) {
+        recetaRepository.deleteByTitulo(titulo);
     }
 
     public Receta actualizar(RecetaRequest req) {
