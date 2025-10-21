@@ -4,40 +4,71 @@ import edu.dosw.model.Ingrediente;
 import java.util.List;
 
 public class RecetaRequest {
-    private String id;
-    private String titulo;
-    private List<Ingrediente> listaIngredientes;
-    private String pasosPreparacion;
-    private String nombreChef;
-    private String tipoAutor;
-    private Integer temporada;
+  private String id;
+  private String titulo;
+  private List<Ingrediente> listaIngredientes;
+  private String pasosPreparacion;
+  private String nombreChef;
+  private String tipoAutor;
+  private Integer temporada;
 
-    public String getId() {
-        return id;
-    }
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+  public String getId() {
+    return id;
+  }
 
-    public List<Ingrediente> getListaIngredientes() { return listaIngredientes; }
-    public void setListaIngredientes(List<Ingrediente> listaIngredientes) { this.listaIngredientes = listaIngredientes; }
+  public String getTitulo() {
+    return titulo;
+  }
 
-    public String getPasosPreparacion() { return pasosPreparacion; }
-    public void setPasosPreparacion(String pasosPreparacion) { this.pasosPreparacion = pasosPreparacion; }
+  public void setTitulo(String titulo) {
+    this.titulo = titulo;
+  }
 
-    public String getNombreChef() { return nombreChef; }
-    public void setNombreChef(String nombreChef) { this.nombreChef = nombreChef; }
+  public List<Ingrediente> getListaIngredientes() {
+    return listaIngredientes;
+  }
 
-    public String getTipoAutor() { return tipoAutor; }
-    public void setTipoAutor(String tipoAutor) { this.tipoAutor = tipoAutor; }
+  public void setListaIngredientes(List<Ingrediente> listaIngredientes) {
+    this.listaIngredientes = listaIngredientes;
+  }
 
-    public Integer getTemporada() { return temporada; }
-    public void setTemporada(Integer temporada) { this.temporada = temporada; }
+  public String getPasosPreparacion() {
+    return pasosPreparacion;
+  }
 
-    public void setAutor(String name) {
-        this.nombreChef = name ;
-    }
+  public void setPasosPreparacion(String pasosPreparacion) {
+    this.pasosPreparacion = pasosPreparacion;
+  }
 
-    public void setId(String number) {
-        this.id = number;
-    }
+  public String getNombreChef() {
+    return nombreChef;
+  }
+
+  public void setNombreChef(String nombreChef) {
+    this.nombreChef = nombreChef;
+  }
+
+  public String getTipoAutor() {
+    return tipoAutor;
+  }
+
+  public void setTipoAutor(String tipoAutor) {
+    this.tipoAutor = tipoAutor;
+  }
+
+  public Integer getTemporada() {
+    return temporada;
+  }
+
+  public void setTemporada(Integer temporada) {
+    this.temporada = temporada;
+  }
+
+  public void setAutor(String name) {
+    this.nombreChef = name;
+  }
+
+  public void setId(String number) {
+    this.id = number;
+  }
 }

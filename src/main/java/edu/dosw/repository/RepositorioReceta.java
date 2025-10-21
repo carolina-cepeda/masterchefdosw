@@ -1,21 +1,19 @@
 package edu.dosw.repository;
 
 import edu.dosw.model.Receta;
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 public interface RepositorioReceta extends MongoRepository<Receta, String> {
 
-    List<Receta> findByTipo(String tipoAutor);
+  List<Receta> findByTipoAutor(String tipoAutor);
 
-    List<Receta> findByIngredientesContaining(String ingrediente);
+  @Query("{ 'listaIngredientes.nombre': { $regex: ?0, $options: 'i' } }")
+  List<Receta> findByIngredienteNombre(String nombreIngrediente);
 
-    List<Receta> findByTemporada(int temporada);
-
-    void deleteByTitulo(String titulo);
+  @Query("{ 'tipoAutor': 'Concursante', 'temporada': ?0 }")
+  List<Receta> findByTemporada(int temporada);
 }
