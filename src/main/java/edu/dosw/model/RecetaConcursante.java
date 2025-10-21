@@ -25,12 +25,12 @@ public class RecetaConcursante extends Receta {
   }
 
   @Override
-    public boolean equals(Object o) {
-      return this == o;
+  public boolean equals(Object o) {
+    return this == o;
   }
 
   @Override
-    public int hashCode() {
-      return super.hashCode();
+  public int hashCode() {
+    return super.hashCode();
   }
 }
