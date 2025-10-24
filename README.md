@@ -130,3 +130,8 @@ Si la receta existe, se hace la actualización de los campos especificados por e
 ### Ejemplos de solicitudes y respuestas
 
 ### Swagger UI
+
+### Uso de Docker para conectar BD mongo
+docker run -d --name masterchef-mongo -p 27017:27017 \
+  -v mongo_data:/data/db \
+  -e MONGO_INITDB_DATABASE=masterchef mongo:7.0}
