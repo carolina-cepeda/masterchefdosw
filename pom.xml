@@ -29,8 +29,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <lombok.version>1.18.30</lombok.version>
 
-        <sonar.projectKey>taller2</sonar.projectKey>
-        <sonar.projectName>taller2</sonar.projectName>
+        <sonar.projectKey>masterChef</sonar.projectKey>
+        <sonar.projectName>masterChef</sonar.projectName>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>src/**/configurators/**</sonar.coverage.exclusions>
