@@ -14,8 +14,8 @@
     <groupId>edu.dosw</groupId>
     <artifactId>masterchefdosw</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>taller2</name>
-    <description>Project Taller2 Manuel</description>
+    <name>Masterchef</name>
+    <description>Project MasterChef</description>
 
     <properties>
         <java.version>17</java.version>
@@ -112,11 +112,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.version}</version>
@@ -173,8 +168,14 @@
                                     <element>PACKAGE</element>
                                     <limits>
                                         <limit>
-                                            <counter>CLASS</counter>
+                                            <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -183,11 +184,16 @@
                                 <exclude>**/config/**</exclude>
                                 <exclude>**/dto/**</exclude>
                                 <exclude>**/model/**</exclude>
+                                <exclude>**/strategy/**</exclude>
+                                <exclude>**/configurators/**</exclude>
                                 <exclude>**/exception/**</exclude>
                                 <exclude>**/default/**</exclude>
+                                <exclude>**/MasterChefDoswApplication.class</exclude>
+                                <exclude>**/MasterChefDoswApplication</exclude>
                             </excludes>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
