@@ -111,4 +111,68 @@ class ControladorRecetaTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.titulo").value("Paella"));
   }
+    @Test
+    void registrarRecetaConcursante_devuelveOk() throws Exception {
+        when(servicio.registrarReceta(any(), eq(TipoAutor.CONCURSANTE))).thenReturn(receta);
+
+        mockMvc.perform(post("/recetas/concursante")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titulo").value("Paella"));
+    }
+
+    @Test
+    void registrarRecetaChef_devuelveOk() throws Exception {
+        when(servicio.registrarReceta(any(), eq(TipoAutor.CHEF))).thenReturn(receta);
+
+        mockMvc.perform(post("/recetas/chef")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titulo").value("Paella"));
+    }
+
+    @Test
+    void actualizarPorTitulo_exitoso() throws Exception {
+        when(servicio.actualizar(any(RecetaRequest.class))).thenReturn(receta);
+
+        mockMvc.perform(put("/recetas/titulo/Paella")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titulo").value("Paella"));
+    }
+
+    @Test
+    void actualizarPorTitulo_notFound() throws Exception {
+        doThrow(new RuntimeException("No encontrada")).when(servicio).actualizar(any(RecetaRequest.class));
+
+        mockMvc.perform(put("/recetas/titulo/Paella")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void actualizarPorId_notFound() throws Exception {
+        doThrow(new RuntimeException("No se encontró")).when(servicio).actualizarPorId(eq("abc123"), any(RecetaRequest.class));
+
+        mockMvc.perform(put("/recetas/abc123")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void eliminarPorTitulo_devuelveNoContent() throws Exception {
+        doNothing().when(servicio).eliminarPorTitulo("Paella");
+
+        mockMvc.perform(delete("/recetas/titulo")
+                        .param("titulo", "Paella"))
+                .andExpect(status().isNoContent());
+
+        verify(servicio).eliminarPorTitulo("Paella");
+    }
+
 }
