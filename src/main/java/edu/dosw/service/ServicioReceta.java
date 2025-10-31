@@ -2,9 +2,15 @@ package edu.dosw.service;
 
 import edu.dosw.dto.RecetaRequest;
 import edu.dosw.model.Receta;
+import edu.dosw.model.TipoAutor; // ← IMPORTAR EL ENUM
 import edu.dosw.repository.RepositorioReceta;
+import edu.dosw.service.strategy.EstrategiaRegistroChef;
+import edu.dosw.service.strategy.EstrategiaRegistroConcursante;
 import edu.dosw.service.strategy.EstrategiaRegistroReceta;
+import edu.dosw.service.strategy.EstrategiaRegistroTelevidente;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,19 +18,28 @@ import org.springframework.stereotype.Service;
 public class ServicioReceta {
 
   private final RepositorioReceta recetaRepository;
-  private EstrategiaRegistroReceta estrategia;
+  private final Map<TipoAutor, EstrategiaRegistroReceta> estrategias;
 
-  // CORREGIDO: Remover @Autowired del campo y usar solo en constructor
   @Autowired
-  public ServicioReceta(RepositorioReceta recetaRepository) {
+  public ServicioReceta(
+      RepositorioReceta recetaRepository,
+      EstrategiaRegistroChef estrategiaChef,
+      EstrategiaRegistroConcursante estrategiaConcursante,
+      EstrategiaRegistroTelevidente estrategiaTelevidente) {
     this.recetaRepository = recetaRepository;
+
+    this.estrategias = new HashMap<>();
+    this.estrategias.put(TipoAutor.CHEF, estrategiaChef);
+    this.estrategias.put(TipoAutor.CONCURSANTE, estrategiaConcursante);
+    this.estrategias.put(TipoAutor.TELEVIDENTE, estrategiaTelevidente);
   }
 
-  public void setEstrategia(EstrategiaRegistroReceta estrategia) {
-    this.estrategia = estrategia;
-  }
+  public Receta registrarReceta(RecetaRequest req, TipoAutor tipo) {
+    EstrategiaRegistroReceta estrategia = estrategias.get(tipo);
+    if (estrategia == null) {
+      throw new RuntimeException("Tipo de receta no válido: " + tipo);
+    }
 
-  public Receta registrarReceta(RecetaRequest req) {
     Receta receta = estrategia.registrarReceta(req);
     return recetaRepository.save(receta);
   }
@@ -39,7 +54,7 @@ public class ServicioReceta {
         .orElseThrow(() -> new RuntimeException("Receta no encontrada con id: " + id));
   }
 
-  public List<Receta> obtenerPorTipo(String tipo) {
+  public List<Receta> obtenerPorTipo(TipoAutor tipo) {
     return recetaRepository.findByTipoAutor(tipo);
   }
 

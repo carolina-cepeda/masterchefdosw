@@ -1,74 +1,34 @@
 package edu.dosw.dto;
 
 import edu.dosw.model.Ingrediente;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import lombok.Data;
 
+@Data
+@Schema(description = "DTO para solicitud de receta")
 public class RecetaRequest {
+
+  @Schema(
+      description = "ID único de la receta (solo para actualizaciones)",
+      example = "550e8400-e29b-41d4-a716-446655440000")
   private String id;
+
+  @Schema(description = "Título de la receta", example = "Paella Valenciana", required = true)
   private String titulo;
+
+  @Schema(description = "Lista de ingredientes", required = true)
   private List<Ingrediente> listaIngredientes;
+
+  @Schema(
+      description = "Pasos de preparación",
+      example = "1. Sofreír... 2. Añadir...",
+      required = true)
   private String pasosPreparacion;
+
+  @Schema(description = "Nombre del chef/autor", example = "Juan Pérez", required = true)
   private String nombreChef;
-  private String tipoAutor;
+
+  @Schema(description = "Temporada (solo para concursantes)", example = "5")
   private Integer temporada;
-
-  public String getId() {
-    return id;
-  }
-
-  public String getTitulo() {
-    return titulo;
-  }
-
-  public void setTitulo(String titulo) {
-    this.titulo = titulo;
-  }
-
-  public List<Ingrediente> getListaIngredientes() {
-    return listaIngredientes;
-  }
-
-  public void setListaIngredientes(List<Ingrediente> listaIngredientes) {
-    this.listaIngredientes = listaIngredientes;
-  }
-
-  public String getPasosPreparacion() {
-    return pasosPreparacion;
-  }
-
-  public void setPasosPreparacion(String pasosPreparacion) {
-    this.pasosPreparacion = pasosPreparacion;
-  }
-
-  public String getNombreChef() {
-    return nombreChef;
-  }
-
-  public void setNombreChef(String nombreChef) {
-    this.nombreChef = nombreChef;
-  }
-
-  public String getTipoAutor() {
-    return tipoAutor;
-  }
-
-  public void setTipoAutor(String tipoAutor) {
-    this.tipoAutor = tipoAutor;
-  }
-
-  public Integer getTemporada() {
-    return temporada;
-  }
-
-  public void setTemporada(Integer temporada) {
-    this.temporada = temporada;
-  }
-
-  public void setAutor(String name) {
-    this.nombreChef = name;
-  }
-
-  public void setId(String number) {
-    this.id = number;
-  }
 }
