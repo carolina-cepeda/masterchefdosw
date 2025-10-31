@@ -17,4 +17,6 @@ public interface RepositorioReceta extends MongoRepository<Receta, String> {
 
   @Query("{ 'tipoAutor': 'CONCURSANTE', 'temporada': ?0 }")
   List<Receta> findByTemporada(int temporada);
+
+  List<Receta> findByTituloIgnoreCase(String titulo);
 }
