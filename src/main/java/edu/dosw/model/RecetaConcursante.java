@@ -1,36 +1,22 @@
 package edu.dosw.model;
 
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "recetas")
 public class RecetaConcursante extends Receta {
-  private int temporada;
 
   public RecetaConcursante(
       String titulo,
-      List<Ingrediente> ingredientes,
-      String pasos,
+      List<Ingrediente> listaIngredientes,
+      String pasosPreparacion,
       String nombreChef,
       int temporada) {
-    super(titulo, ingredientes, pasos, nombreChef, "Concursante");
-    this.temporada = temporada;
+    super(
+        titulo, listaIngredientes, pasosPreparacion, nombreChef, TipoAutor.CONCURSANTE, temporada);
   }
 
-  @Override
-  public Integer getTemporada() {
-    return temporada;
-  }
-
-  public void setTemporada(int temporada) {
-    this.temporada = temporada;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    return this == o;
-  }
-
-  @Override
-  public int hashCode() {
-    return super.hashCode();
+  public RecetaConcursante() {
+    super();
   }
 }

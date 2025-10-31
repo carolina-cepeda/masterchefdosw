@@ -2,6 +2,7 @@ package edu.dosw.controller;
 
 import edu.dosw.dto.RecetaRequest;
 import edu.dosw.model.Receta;
+import edu.dosw.model.TipoAutor;
 import edu.dosw.service.ServicioReceta;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,19 +24,19 @@ public class ControladorReceta {
 
   @PostMapping("/televidente")
   public ResponseEntity<Receta> registrarRecetaTelevidente(@RequestBody RecetaRequest req) {
-    Receta nueva = servicio.registrarReceta(req, "televidente");
+    Receta nueva = servicio.registrarReceta(req, TipoAutor.TELEVIDENTE);
     return ResponseEntity.ok(nueva);
   }
 
-  @PostMapping("/participante")
-  public ResponseEntity<Receta> registrarRecetaParticipante(@RequestBody RecetaRequest req) {
-    Receta nueva = servicio.registrarReceta(req, "participante");
+  @PostMapping("/concursante")
+  public ResponseEntity<Receta> registrarRecetaConcursante(@RequestBody RecetaRequest req) {
+    Receta nueva = servicio.registrarReceta(req, TipoAutor.CONCURSANTE);
     return ResponseEntity.ok(nueva);
   }
 
   @PostMapping("/chef")
   public ResponseEntity<Receta> registrarRecetaChef(@RequestBody RecetaRequest req) {
-    Receta nueva = servicio.registrarReceta(req, "chef");
+    Receta nueva = servicio.registrarReceta(req, TipoAutor.CHEF);
     return ResponseEntity.ok(nueva);
   }
 
@@ -61,13 +62,11 @@ public class ControladorReceta {
     return ResponseEntity.ok(servicio.obtenerPorId(id));
   }
 
-  @Operation(
-      summary = "Obtener recetas por tipo",
-      description = "Filtra recetas por tipo de autor (Chef, Concursante, Televidente)")
+  @Operation(summary = "Obtener recetas por tipo", description = "Filtra recetas por tipo de autor")
   @GetMapping("/tipo/{tipo}")
   public ResponseEntity<List<Receta>> getPorTipo(
-      @Parameter(description = "Tipo de autor: Chef, Concursante o Televidente") @PathVariable
-          String tipo) {
+      @Parameter(description = "Tipo de autor: CHEF, CONCURSANTE o TELEVIDENTE") @PathVariable
+          TipoAutor tipo) { // ← Spring convierte automáticamente
     return ResponseEntity.ok(servicio.obtenerPorTipo(tipo));
   }
 

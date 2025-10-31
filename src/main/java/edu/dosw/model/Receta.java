@@ -4,18 +4,19 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "recetas")
 @Data
 @AllArgsConstructor
+@Document(collection = "recetas")
 public class Receta {
-  private String id;
+  @Id private String id;
   private String titulo;
   private List<Ingrediente> listaIngredientes;
   private String pasosPreparacion;
   private String nombreChef;
-  private String tipoAutor;
+  private TipoAutor tipoAutor;
   private Integer temporada;
 
   public Receta(
@@ -23,7 +24,7 @@ public class Receta {
       List<Ingrediente> listaIngredientes,
       String pasosPreparacion,
       String nombreChef,
-      String tipoAutor) {
+      TipoAutor tipoAutor) {
     this(titulo, listaIngredientes, pasosPreparacion, nombreChef, tipoAutor, null);
   }
 
@@ -32,7 +33,7 @@ public class Receta {
       List<Ingrediente> listaIngredientes,
       String pasosPreparacion,
       String nombreChef,
-      String tipoAutor,
+      TipoAutor tipoAutor,
       Integer temporada) {
     this.id = UUID.randomUUID().toString();
     this.titulo = titulo;
@@ -41,5 +42,9 @@ public class Receta {
     this.nombreChef = nombreChef;
     this.tipoAutor = tipoAutor;
     this.temporada = temporada;
+  }
+
+  public Receta() {
+    this.id = UUID.randomUUID().toString();
   }
 }
