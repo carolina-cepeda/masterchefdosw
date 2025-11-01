@@ -47,11 +47,12 @@ implementando los metodos CRUD.
 
 
 * **EstrategiaRegistroReceta (interfaz):** Define el método registrarReceta, que las subclases concretas implementan de acuerdo al tipo de usuario. Las
-estrategias específicas son:EstrategiaRegistroChef ,EstrategiaRegistroConcursante  Y EstrategiaRegistroTelevidente.
+estrategias específicas son:EstrategiaRegistroChef, EstrategiaRegistroConcursante y EstrategiaRegistroTelevidente. Se maneja el uso del patrón Strategy que
+permite crear cada receta de forma sencilla sin que el usuario tenga que buscar específicamente un método para ello.
 
 
-* **Receta**: clase base con atributos comunes: título, listaIngredientes, pasosPreparacion y nombreChef.
-
+* **Receta**: clase base con atributos comunes: título, listaIngredientes,tipoAutor, pasosPreparacion y nombreChef.En el caso de tipoAutor solo se tienen
+* 3 opciones, como mencionadas anteriormente, por ello se hace uso de un ENUM para evitar el uso de diferentes tipos de autores a los establecidos.
 ![img.png](docs/UML/diagramaClases.png)
 
 
@@ -59,7 +60,7 @@ estrategias específicas son:EstrategiaRegistroChef ,EstrategiaRegistroConcursan
 
 A continuación se muestra el diagrama de la base de datos NOSQL, el documento recetas es el contenedor prinicpal
 en donde se incluyen todos los campos, aplicando una estructura embebida se guardan los ingredientes como una lista de objetos, los cuales
-tienen sus propios campos (nombre, descripción). Se tienen campos opcionales como lo es la temporada ya que esta solo se
+tienen sus propios campos (nombre, descripción). Se tienen campos opcionales como lo es la temporada, ya que solo se
 guarda si la receta es de un concursante.
 ![img.png](docs/UML/diagramaBD.png)
 
@@ -72,16 +73,14 @@ repositorio en la base de datos y se devuelve la información.
 
 * **Receta Televidente**
 
-![img.png](docs/UML/registarRecetaTelevidente.png)
+![img.png](docs/img/imagen23.png)
 
 * **Receta Concursante**
-
-![img_1.png](docs/UML/registrarRecetaConcursante.png)
+![img_1.png](docs/UML/img_1.png)
 
 * **Receta Jurado**
 
-![img_2.png](docs/UML/registrarRecetaJurado.png)
-
+![img_2.png](docs/UML/img_2.png)
 
 ### **Obtener Recetas**
 Se tienen varios métodos de consulta de recetas:
@@ -96,14 +95,14 @@ Se hace la búsqueda del id dentro de la colección de recetas, en caso de encon
 de esta receta.
 ![img_1.png](docs/UML/obtenerRecetaPorID.png)
 
-* Obtener receta por tipo (concursante, televidente, jurado) 
-Se hace un filtro por el tipo de Receta en la base de datos.
+* **Obtener receta por su título**
+De forma similar a la consulta por identificador, se busca en la colección de recetas y se devuelve la lista de ellas .
+![img_3.png](docs/UML/img_3.png)
+* **Obtener receta por tipo (concursante, televidente, jurado)**
+Se hace un filtro por el tipo de Receta en la base de datos.Esto se maneja con un ENUM por lo que a la hora de aplicación se
+muestra como una lista de opciones, por ejemplo, si se buscan las recetas de los concursantes.
 
 ![img_2.png](docs/UML/obtenerRecetaconcursante.png)
-
-![img_3.png](docs/UML/obtenerRecetaTelevidente.png)
-
-![img_4.png](docs/UML/obtenerRecetajurado.png)
 
 
 * **Obtener Receta por Temporada**
@@ -115,23 +114,92 @@ Se realiza una consulta sobre la lista de ingredientes de cada una de las receta
 ![img.png](docs/UML/obtenerRecetaIngrediente.png)
 
 
-### Eliminar una receta !!!
+### Eliminar una receta 
 * **Eliminar receta por ID**
 Se elimina una receta con su identificador (id) en caso de existir.
 ![img.png](docs/UML/eliminarReceta.png)
 
 
+* **Eliminar receta por titulo**
+* Se elimina una receta con base en su título, pero sí existe más de una receta con el mismo título, se le recomienda
+el uso de la funcionalidad de eliminar receta por ID.
+
+![img.png](docs/UML/eliminarRecetaPorTitulo.png)
+
 ### Actualizar una receta
-Si la receta existe, se hace la actualización de los campos especificados por el actor.
-![img_1.png](docs/UML/actualizarReceta.png)
+
+* una receta puede actualizarse con su ID
+Si la receta existe, se hace la actualización de los campos especificados por el actor usando su id (identificador)
+![img_2.png](docs/img/imagen25.png)
+
 
 ## Instrucciones de instalación y ejecución
 
 ### Ejemplos de solicitudes y respuestas
 
 ### Swagger UI
+![img_12.png](docs/img/img_12.png)
+SwaggerUI es una herramienta que nos permite simplificar el desarrollo de la API REST.Esto se debe a que
+nos permite visualizar e interactuar con esta.
+
+A continuación se muestran algunos ejemplos de uso de los ENDPOINTS, con su solicitud(request) y
+respuesta.
+
+* **Registro de recetas**
+Se registran por cada tipo como se observa a continuación:
+
+* receta de un televidente
+![img_3.png](docs/img/imagen26.png)
+![img_5.png](docs/img/img_5.png)
+
+  
+* **Consulta de recetas**
+
+* consulta por titulo
+![img_4.png](docs/img/img_4.png)
+* consulta por identificador
+* ![img_6.png](docs/img/img_6.png)
+
+* todas las recetas
+![img_7.png](docs/img/img_7.png)
+* por tipo
+![img_8.png](docs/img/img_8.png)
+![img_9.png](docs/img/img_9.png)
+
+* por temporada: como se observa a continuación sólo se muestran recetas de concursantes, en esa
+temporada específica.
+![img_10.png](docs/img/img_10.png)
+![img_11.png](docs/img/img_11.png)
+
+* por ingrediente:
+![img_13.png](docs/img/img_13.png)
+
+* **Actualización de recetas**
+
+* por titulo
+![img_16.png](docs/img/img_16.png)
+![img_17.png](docs/img/img_17.png)
+* por id
+![img_18.png](docs/img/img_18.png)
+![img_19.png](docs/img/img_19.png)
+* **Eliminación de recetas**
+
+* por titulo
+![img_15.png](docs/img/img_15.png)
+* por ID
+![img_14.png](docs/img/img_14.png)
 
 ### Uso de Docker para conectar BD mongo
 
 Se hace el uso del siguiente comando para crear un contenedor de la base de datos.
 docker run -d --name masterchef-mongo -p 27017:27017 -v mongo_data:/data/db -e MONGO_INITDB_DATABASE=masterchef mongo:7.0
+
+
+### Cobertura y calidad del código
+Se hace uso de jacoco para revisar la cobertura de las pruebas unitarias, evidenciando
+el uso de pruebas robustas y relacionadas a las funcionalidades principales del sistema.
+![img.png](docs/img/img.png)
+
+A su vez, se hace uso de sonarqube para revisar la calidad del código estático, con el fin de manejar una mejor
+legibilidad a futuro a la hora de mantenibilidad y expansión.
+![img_1.png](docs/img/img_1.png)

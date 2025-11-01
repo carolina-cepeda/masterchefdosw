@@ -4,6 +4,7 @@ import edu.dosw.dto.RecetaRequest;
 import edu.dosw.model.RecetaChef;
 import org.springframework.stereotype.Component;
 
+/** Estrategia para el registro de la receta de un chef */
 @Component
 public class EstrategiaRegistroChef implements EstrategiaRegistroReceta {
   @Override
