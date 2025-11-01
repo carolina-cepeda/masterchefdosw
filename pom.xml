@@ -14,8 +14,9 @@
     <groupId>edu.dosw</groupId>
     <artifactId>masterchefdosw</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Masterchef</name>
     <packaging>jar</packaging>
+
+    <name>Masterchef</name>
     <description>Project MasterChef</description>
 
     <properties>
