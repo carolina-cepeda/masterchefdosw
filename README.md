@@ -188,6 +188,7 @@ temporada específica.
 ![img_15.png](img_15.png)
 * por ID
 ![img_14.png](img_14.png)
+
 ### Uso de Docker para conectar BD mongo
 
 Se hace el uso del siguiente comando para crear un contenedor de la base de datos.
