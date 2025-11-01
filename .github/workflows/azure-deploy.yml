@@ -3,7 +3,7 @@ name: Deploy to Azure
 on:
   push:
     branches:
-      -develop
+      - develop
   pull_request:
     branches:
       - develop
@@ -24,6 +24,27 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
+
+      - name: Verify JAR file was created
+        run: |
+          echo "Verificando creación del JAR..."
+          if [ ! -d "target" ]; then
+            echo "ERROR: No existe directorio target/"
+            exit 1
+          fi
+          
+          JAR_FILES=$(find target -name "*.jar" -type f)
+          if [ -z "$JAR_FILES" ]; then
+            echo " ERROR: No se encontraron archivos JAR en target/"
+            echo " Contenido de target/:"
+            ls -la target/
+            exit 1
+          fi
+          
+          echo "JARs encontrados:"
+          echo "$JAR_FILES"
+          echo "Tamaño de los JARs:"
+          ls -lh target/*.jar
 
       - name: Login to Azure
         uses: azure/login@v1
