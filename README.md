@@ -47,11 +47,12 @@ implementando los metodos CRUD.
 
 
 * **EstrategiaRegistroReceta (interfaz):** Define el método registrarReceta, que las subclases concretas implementan de acuerdo al tipo de usuario. Las
-estrategias específicas son:EstrategiaRegistroChef ,EstrategiaRegistroConcursante  Y EstrategiaRegistroTelevidente.
+estrategias específicas son:EstrategiaRegistroChef, EstrategiaRegistroConcursante y EstrategiaRegistroTelevidente. Se maneja el uso del patrón Strategy que
+permite crear cada receta de forma sencilla sin que el usuario tenga que buscar específicamente un método para ello.
 
 
-* **Receta**: clase base con atributos comunes: título, listaIngredientes, pasosPreparacion y nombreChef.
-
+* **Receta**: clase base con atributos comunes: título, listaIngredientes,tipoAutor, pasosPreparacion y nombreChef.En el caso de tipoAutor solo se tienen
+* 3 opciones, como mencionadas anteriormente, por ello se hace uso de un ENUM para evitar el uso de diferentes tipos de autores a los establecidos.
 ![img.png](docs/UML/diagramaClases.png)
 
 
@@ -59,7 +60,7 @@ estrategias específicas son:EstrategiaRegistroChef ,EstrategiaRegistroConcursan
 
 A continuación se muestra el diagrama de la base de datos NOSQL, el documento recetas es el contenedor prinicpal
 en donde se incluyen todos los campos, aplicando una estructura embebida se guardan los ingredientes como una lista de objetos, los cuales
-tienen sus propios campos (nombre, descripción). Se tienen campos opcionales como lo es la temporada ya que esta solo se
+tienen sus propios campos (nombre, descripción). Se tienen campos opcionales como lo es la temporada, ya que solo se
 guarda si la receta es de un concursante.
 ![img.png](docs/UML/diagramaBD.png)
 
@@ -72,16 +73,14 @@ repositorio en la base de datos y se devuelve la información.
 
 * **Receta Televidente**
 
-![img.png](docs/UML/registarRecetaTelevidente.png)
+![img.png](img.png)
 
 * **Receta Concursante**
-
-![img_1.png](docs/UML/registrarRecetaConcursante.png)
+![img_1.png](docs/UML/img_1.png)
 
 * **Receta Jurado**
 
-![img_2.png](docs/UML/registrarRecetaJurado.png)
-
+![img_2.png](docs/UML/img_2.png)
 
 ### **Obtener Recetas**
 Se tienen varios métodos de consulta de recetas:
@@ -96,14 +95,14 @@ Se hace la búsqueda del id dentro de la colección de recetas, en caso de encon
 de esta receta.
 ![img_1.png](docs/UML/obtenerRecetaPorID.png)
 
-* Obtener receta por tipo (concursante, televidente, jurado) 
-Se hace un filtro por el tipo de Receta en la base de datos.
+* **Obtener receta por su título**
+De forma similar a la consulta por identificador, se busca en la colección de recetas y se devuelve la lista de ellas .
+![img_3.png](docs/UML/img_3.png)
+* **Obtener receta por tipo (concursante, televidente, jurado)**
+Se hace un filtro por el tipo de Receta en la base de datos.Esto se maneja con un ENUM por lo que a la hora de aplicación se
+muestra como una lista de opciones, por ejemplo, si se buscan las recetas de los concursantes.
 
 ![img_2.png](docs/UML/obtenerRecetaconcursante.png)
-
-![img_3.png](docs/UML/obtenerRecetaTelevidente.png)
-
-![img_4.png](docs/UML/obtenerRecetajurado.png)
 
 
 * **Obtener Receta por Temporada**
@@ -115,15 +114,24 @@ Se realiza una consulta sobre la lista de ingredientes de cada una de las receta
 ![img.png](docs/UML/obtenerRecetaIngrediente.png)
 
 
-### Eliminar una receta !!!
+### Eliminar una receta 
 * **Eliminar receta por ID**
 Se elimina una receta con su identificador (id) en caso de existir.
 ![img.png](docs/UML/eliminarReceta.png)
 
 
+* **Eliminar receta por titulo**
+* Se elimina una receta con base en su título, pero sí existe más de una receta con el mismo título, se le recomienda
+el uso de la funcionalidad de eliminar receta por ID.
+
+![img.png](docs/UML/eliminarRecetaPorTitulo.png)
+
 ### Actualizar una receta
-Si la receta existe, se hace la actualización de los campos especificados por el actor.
-![img_1.png](docs/UML/actualizarReceta.png)
+
+* una receta puede actualizarse con su ID
+Si la receta existe, se hace la actualización de los campos especificados por el actor usando su id (identificador)
+![img_2.png](img_2.png)
+
 
 ## Instrucciones de instalación y ejecución
 
