@@ -38,3 +38,18 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=masterchefdosw -Dsonar.projectName='masterchefdosw'
+
+      - name: Verify JAR file was created
+        run: |
+          echo "Verificando creación del JAR..."
+          find . -name "*.jar" -type f
+          ls -la target/
+          echo "--- Archivos JAR encontrados ---"
+          find . -name "*.jar" -type f | head -10
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-app
+          path: target/*.jar
+          retention-days: 1
