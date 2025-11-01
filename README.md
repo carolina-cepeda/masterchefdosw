@@ -138,7 +138,56 @@ Si la receta existe, se hace la actualización de los campos especificados por e
 ### Ejemplos de solicitudes y respuestas
 
 ### Swagger UI
+![img_12.png](img_12.png)
+SwaggerUI es una herramienta que nos permite simplificar el desarrollo de la API REST.Esto se debe a que
+nos permite visualizar e interactuar con esta.
 
+A continuación se muestran algunos ejemplos de uso de los ENDPOINTS, con su solicitud(request) y
+respuesta.
+
+* **Registro de recetas**
+Se registran por cada tipo como se observa a continuación:
+
+* receta de un televidente
+![img_3.png](img_3.png)
+![img_5.png](img_5.png)
+
+  
+* **Consulta de recetas**
+
+* consulta por titulo
+![img_4.png](img_4.png)
+* consulta por identificador
+* ![img_6.png](img_6.png)
+
+* todas las recetas
+![img_7.png](img_7.png)
+* por tipo
+![img_8.png](img_8.png)
+![img_9.png](img_9.png)
+
+* por temporada: como se observa a continuación sólo se muestran recetas de concursantes, en esa
+temporada específica.
+![img_10.png](img_10.png)
+![img_11.png](img_11.png)
+
+* por ingrediente:
+![img_13.png](img_13.png)
+
+* **Actualización de recetas**
+
+* por titulo
+![img_16.png](img_16.png)
+![img_17.png](img_17.png)
+* por id
+![img_18.png](img_18.png)
+![img_19.png](img_19.png)
+* **Eliminación de recetas**
+
+* por titulo
+![img_15.png](img_15.png)
+* por ID
+![img_14.png](img_14.png)
 ### Uso de Docker para conectar BD mongo
 
 Se hace el uso del siguiente comando para crear un contenedor de la base de datos.
